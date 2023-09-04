@@ -1,0 +1,7 @@
+# vars file for deploy_backend
+sleeptime: 15
+services_for_compose: {
+    "auth":        "3001",
+    "article-api": "3002",
+    "file-store":  "3003",
+    }

@@ -1,0 +1,68 @@
+database:
+  type: 'postgres'
+  host: 'postgres'
+  port: 5432
+  username: 'postgres'
+  password: 'test'
+  database: 'archon-db'
+
+redis:
+  flushAll: true
+  host: 'redis'
+  port: 6379
+
+jwt:
+  nonce:
+    secret: 'archon-super-secrete-jwt'
+    expires: '1h'
+  accessTokenExpire: '1h'
+  refreshTokenExpire: '14d'
+
+sessionExpirationTime: 86400000
+
+microservices:
+  auth:
+    url: 'http://auth:3001'
+    port: '3001'
+
+  articleApi:
+    url: 'http://article-api:3002'
+    port: '3002'
+
+  fileStore:
+    url: 'http://file-store:3003'
+    port: '3003'
+
+fileStore:
+  filePath: './files/article-'
+  filesMaxCount: 20
+
+articleApi:
+  filePath: './tmp/'
+  filesMaxCount: 20
+  fileStoreUrl: 'http://localhost:3003/file-store/upload/'
+  aiServiceUrl: 'http://localhost:3004/ai-service/upload/'
+
+openPgp:
+  encryptedExtName: '.pgp'
+
+keysPath:
+  privateKey: './keys/private.key'
+  publicKey: './keys/public.key'
+  passphrase: './keys/passphrase.txt'
+
+gpg:
+  baseDir: 'tmp'
+  keysDir: 'keys'
+  encryptedDir: 'encrypted'
+  decryptedDir: 'decrypted'
+  importUserKeyCommand: 'gpg --import '
+  exportSrvKeyCommand: 'gpg --armor --export'
+  encryptCommand: 'gpg --trust-model always --encrypt --output '
+  decryptCommand: 'gpg --trust-model always --decrypt --output '
+  signKeyCommand: 'gpg --lsign '
+  signFileCommand: 'gpg --sign '
+  verifySignFileCommand: 'gpg --verify '
+  passphrase: ''
+  privateKeyArmored: ''
+  publicKeyArmored: ''

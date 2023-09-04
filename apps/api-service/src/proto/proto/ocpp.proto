@@ -1,0 +1,367 @@
+syntax = "proto3";
+
+package ocpp;
+
+
+service OcppService {
+  
+  rpc ChangeConfiguration (ChangeConfigurationRequest) returns (ChangeConfigurationResponse) {}
+
+  rpc ClearCache (ClearCacheRequest) returns (ClearCacheResponse) {}
+  
+  rpc GetDiagnostics (GetDiagnosticsRequest) returns (GetDiagnosticsResponse) {}
+
+  rpc RemoteStartTransaction (RemoteStartTransactionRequest) returns (RemoteStartTransactionResponse) {}
+  rpc RemoteStopTransaction (RemoteStopTransactionRequest) returns (RemoteStopTransactionResponse) {}
+
+  rpc Reset (ResetRequest) returns (ResetResponse) {}
+
+  rpc UnlockConnector (UnlockConnectorRequest) returns (UnlockConnectorResponse) {}
+
+  rpc ReserveNow (ReserveNowRequest) returns (ReserveNowResponse) {}
+
+  rpc CancelReservation (CancelReservationRequest) returns (CancelReservationResponse) {}
+
+  rpc DataTransfer (DataTransferRequest) returns (DataTransferResponse) {}
+
+  rpc GetConfiguration (GetConfigurationRequest) returns (GetConfigurationResponse) {}
+
+  rpc GetLocalListVersion (GetLocalListVersionRequest) returns (GetLocalListVersionResponse) {}
+
+  rpc SendLocalList (SendLocalListRequest) returns (SendLocalListResponse) {}
+
+  rpc TriggerMessage (TriggerMessageRequest) returns (TriggerMessageResponse) {}
+
+  rpc GetCompositeSchedule (GetCompositeScheduleRequest) returns (GetCompositeScheduleResponse) {}
+
+  rpc SetChargingProfile (SetChargingProfileRequest) returns (SetChargingProfileResponse) {}
+
+  rpc ClearChargingProfile (ClearChargingProfileRequest) returns (ClearChargingProfileResponse) {}
+  
+
+  // Streams rpc
+  rpc LogEventSream (Empty) returns (stream LogEventSreamResponse);
+  rpc TaskEventSream (Empty) returns (stream TaskEventSreamResponse);
+  rpc TransactionEventSream (Empty) returns (stream TransactionEventSreamResponse);
+
+  rpc GetTimeStream(Empty) returns (stream TimeStreamResponse);
+}
+
+message Empty {
+}
+
+message LogEventSreamResponse {
+  string event = 1;
+}
+
+message TaskEventSreamResponse {
+  string tasks = 1;
+}
+
+message TransactionEventSreamResponse {
+  string event = 1;
+}
+
+message TimeStreamResponse {
+  string result = 1;
+}
+
+
+// ChangeConfiguration
+
+message ChangeConfigurationRequest {
+  string chargePointId = 1;
+  string key = 2;
+  string value = 3;
+}
+
+message ChangeConfigurationResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// ClearCache
+
+message ClearCacheRequest {
+  string chargePointId = 1;
+}
+
+message ClearCacheResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// GetDiagnostics
+
+message GetDiagnosticsRequest {
+  string chargePointId = 1;
+  string location = 2;
+}
+
+message GetDiagnosticsResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataGetDiagnosticsType data = 3;
+}
+
+// StartTransaction
+
+message RemoteStartTransactionRequest {
+  string chargePointId = 1;
+  int32 connectorId = 2;
+  string idTag = 3;
+  string transactionId = 4;
+  string reservationId = 5;
+}
+
+message RemoteStartTransactionResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStartTransactionType data = 3;
+}
+
+// StopTransaction
+
+message RemoteStopTransactionRequest {
+  string chargePointId = 1;
+  string transactionId = 2;
+}
+
+message RemoteStopTransactionResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// Reset
+
+message ResetRequest {
+  string chargePointId = 1;
+  ResetType type = 2;
+}
+
+message ResetResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// UnlockConnector
+
+message UnlockConnectorRequest {
+  string chargePointId = 1;
+  int32 connectorId = 2;
+}
+
+message UnlockConnectorResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// ReserveNow
+
+message ReserveNowRequest {
+  string chargePointId = 1;
+  int32 connectorId = 2;
+  string expiryDate = 3;
+  string idTag = 4;
+  string reservationId = 5;
+}
+
+message ReserveNowResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// CancelReservation
+
+message CancelReservationRequest {
+  string chargePointId = 1;
+  string reservationId = 2;
+}
+
+message CancelReservationResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// DataTransfer
+
+message DataTransferRequest {
+  string chargePointId = 1;
+  string vendorId = 2;
+  string messageId = 3;
+  string data = 4;
+}
+
+message DataTransferResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// GetConfiguration
+
+message GetConfigurationRequest {
+  string chargePointId = 1;
+  repeated string key = 2;
+}
+
+message GetConfigurationResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataGetConfigurationType data = 3;
+}
+
+// GetLocalListVersion
+
+message GetLocalListVersionRequest {
+  string chargePointId = 1;
+}
+
+message GetLocalListVersionResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataGetLocalListVersionType data = 3;
+}
+
+// SendLocalList
+
+message SendLocalListRequest {
+  string chargePointId = 1;
+  int32 listVersion = 2;
+  repeated LocalAuthorizationListType localAuthorizationList = 3;
+}
+
+message SendLocalListResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// TriggerMessage
+
+message TriggerMessageRequest {
+  string chargePointId = 1;
+  string requestedMessage = 2;
+  optional int32 connectorId = 3;
+}
+
+message TriggerMessageResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// GetCompositeSchedule
+
+message GetCompositeScheduleRequest {
+  string chargePointId = 1;
+  int32 connectorId = 2;
+  int32 duration = 3;
+  string chargingRateUnit = 4;
+}
+
+message GetCompositeScheduleResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// SetChargingProfile
+
+message SetChargingProfileRequest {
+  string chargePointId = 1;
+  int32 id = 2;
+}
+
+message SetChargingProfileResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+// ClearChargingProfile
+
+message ClearChargingProfileRequest {
+  string chargePointId = 1;
+  int32 id = 2;
+}
+
+message ClearChargingProfileResponse {
+  int32 httpStatus = 1;
+  repeated string error = 2;
+  DataStatusType data = 3;
+}
+
+enum Status {
+  Accepted = 0;
+  Rejected = 1;
+  Unlocked = 2;
+  Failed = 3;
+}
+
+enum ResetType {
+  Soft = 0;
+  Hard = 1;
+}
+
+enum UpdateType {
+  Full = 0;
+  Differential = 1;
+}
+
+enum RequestedMessageType {
+  BootNotification = 0;
+  DiagnosticsStatusNotification = 1;
+  FirmwareStatusNotification = 2;
+  Heartbeat = 3;
+  MeterValues = 4;
+  StatusNotification = 5;
+}
+
+//sub message data
+
+message ConfigurationKeyType {
+  string key = 1;
+  string value = 2;
+  bool readonly = 3;
+}
+
+message LocalAuthorizationListType {
+  string idTag = 1;
+  IdTagInfoType idTagInfo = 2;
+  UpdateType updateType = 3;
+}
+
+message DataStatusType {
+  Status status = 1; 
+}
+
+message DataStartTransactionType {
+  Status status = 1;
+  string transactionId = 2; 
+}
+
+message DataGetDiagnosticsType {
+  string fileName = 2; 
+}
+
+message DataGetConfigurationType {
+  Status status = 1;
+  repeated ConfigurationKeyType configurationKey = 2;
+}
+
+message DataGetLocalListVersionType {
+  Status status = 1;
+  int32 listVersion = 2;
+}
+
+message IdTagInfoType {
+  Status status = 1;
+}
