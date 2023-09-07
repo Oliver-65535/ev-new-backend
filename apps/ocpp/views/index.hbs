@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Dashboard</title>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <link href="css/rdash.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body class="hamburg">
+  <div id="page-wrapper" class="open">
+
+    <!-- Sidebar -->
+
+    <div id="sidebar-wrapper">
+      <ul class="sidebar">
+        <li class="sidebar-main">
+          <a href="#">
+            OCPP Server
+            <span class="menu-icon glyphicon glyphicon-transfer"></span>
+          </a>
+        </li>
+        <li class="sidebar-title"><span>NAVIGATION</span></li>
+        <li class="sidebar-list">
+          <a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="col-xs-4">
+          <a href="/" >
+            ICAPIA
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="/" >
+            About
+          </a>
+        </div>
+        <div class="col-xs-4">
+          <a href="/">
+            Support
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- End Sidebar -->
+
+    <div id="content-wrapper">
+      <div class="page-content">
+
+        <!-- Header Bar -->
+
+        <div class="row header">
+          <div class="col-xs-12">
+            <div class="user pull-right">
+              <div class="item dropdown">
+                <a href="#" class="dropdown-toggle">
+                  <img src="img/avatar.jpg">
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Joe Bloggs
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="#">
+                      Profile
+                    </a>
+                  </li>
+                  <li class="link">
+                    <a href="#">
+                      Menu Item
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li class="link">
+                    <a href="/logout">
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="item dropdown">
+                <a href="#" class="dropdown-toggle">
+                  <i class="fa fa-bell-o"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li class="dropdown-header">
+                    Notifications
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="#">Server Down!</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="meta">
+              <div class="page">
+                Dashboard
+              </div>
+              <div class="breadcrumb-links">
+                Home / Dashboard
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- End Header Bar -->
+
+        <!-- Main Content -->
+        <div class="row">
+          <div class="col-xs-12">
+            <!-- ============================ -->
+            <div class="row ng-scope">
+              <div class="col-lg-4">
+                <rd-widget>
+                  <div class="widget" ng-transclude="">
+                    <rd-widget-header icon="fa-tasks" title="Servers" class="ng-scope ng-isolate-scope">
+                      <div class="widget-header ng-binding">
+                        <i class="fa fa-tasks" ng-class="icon"></i> Chargepoints <div class="pull-right"
+                          ng-transclude=""><a href="#" class="ng-scope">Manage</a>
+                        </div>
+                      </div>
+                    </rd-widget-header>
+                    <rd-widget-body classes="medium no-padding" class="ng-scope ng-isolate-scope">
+                      <div class="widget-body medium no-padding" ng-class="classes">
+                        <div ng-hide="loading" class="widget-content" ng-transclude="">
+                          <div class="table-responsive ng-scope">
+                            <table class="table">
+                              <tbody>
+                                {{#each points}}
+                                <tr class="charge-hover {{this.active}}">
+                                  <td><a href="/{{this.charge}}">{{this.charge}}</a></td>
+                                  <td>{{this.model}}</td>
+                                  <td><span class="text-success"><i class="fa fa-check"></i></span></td>
+                                </tr>
+
+                                {{/each}}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </rd-widget-body>
+                  </div>
+                </rd-widget>
+              </div>
+              <div class="col-lg-8">
+                <rd-widget>
+                  <div class="widget" ng-transclude="">
+                    <rd-widget-header icon="fa-plus" title="Extras" class="ng-scope ng-isolate-scope">
+                      <div class="widget-header ng-binding">
+                        {{!-- <i class="fa fa-plus" ng-class="icon"></i> --}}
+                        ChargePoint:<a href="/{{id}}"> {{id}} </a>
+                        <div class="pull-right" ng-transclude="">
+                          <button class="btn btn-sm btn-info ng-scope">Button</button>
+                        </div>
+                      </div>
+                    </rd-widget-header>
+                    <rd-widget-body class="ng-scope ng-isolate-scope">
+                      {{!-- ++++++++++++++++++++++++++++ --}}
+
+
+                      <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-12">
+                          <div class="panel-group" id="accordion">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span
+                                      class="glyphicon glyphicon-file">
+                                    </span>Transaction</a>
+                                </h4>
+                              </div>
+                              <div id="collapseOne" class="panel-collapse collapse in">
+                                <div class="panel-body">
+
+                                  <div class="input-group mt-1">
+                                    <span class="input-group-addon">Start transaction</span>
+                                    <select class="form-control" id="connector">
+                                      <option value="1">Connector ID: 1</option>
+                                      <option value="2">Connector ID: 2</option>
+                                      <option value="3">Connector ID: 3</option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-success" type="button" onclick="startTransaction()">
+                                    </span>Start</button>
+                                    </span>
+                                  </div>
+
+                                  <div class="input-group mt-1">
+                                    <span class="input-group-addon">Stop transaction</span>
+                                    <input type="search" class="form-control" placeholder="Transaction ID"
+                                      id="transactionId">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-danger" type="button" onclick="stopTransaction()">
+                                    </span>Stop</button>
+                                    </span>
+                                  </div>
+                                  
+
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span
+                                      class="glyphicon glyphicon-th-list">
+                                    </span>Configuration</a>
+                                </h4>
+                              </div>
+                              <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                  <div class="input-group mt-1">
+                                    <span class="input-group-addon">Get configuration</span>
+                                    <select class="form-control" id="getConfigurationKey">
+                                      {{#each configs}}
+                                      <option value="{{this.value}}">{{this.value}}</option>
+                                      {{/each}}
+                                    </select>
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-primary" type="button" onclick="getConfiguration()">
+                                    </span>Get</button>
+                                    </span>
+                                  </div>
+
+                                  <div class="input-group mt-1">
+                                    <span class="input-group-addon">Set configuration</span>
+                                    <span class="input-group-addon">
+                                      <select class="form-control " id="setConfigurationKey" style="width: 200px;">
+                                        {{#each configs}}
+                                        <option value="{{this.value}}">{{this.title}}</option>
+                                        {{/each}}
+                                      </select></span>
+                                    <input type="search" class="form-control" placeholder="Value"
+                                      id="setConfigurationValue">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-success" type="button" onclick="setConfiguration()">
+                                    </span>Set</button>
+                                    </span>
+                                  </div>
+
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+
+
+                  {{!-- ++++++++++++++++++++++++++++++++++++ --}}
+                  </rd-widget-body>
+              </div>
+              </rd-widget>
+            </div>
+          </div>
+
+          <!-- ============================ -->
+
+        </div>
+
+        <div class="row ng-scope">
+          <div class="col-lg-6">
+            <rd-widget>
+              <div class="widget" ng-transclude="">
+                <rd-widget-header icon="fa-plus" title="Extras" class="ng-scope ng-isolate-scope">
+                  <div class="widget-header ng-binding"><i class="fa fa-plus" ng-class="icon"></i> Global logs
+                    <div class="pull-right" ng-transclude="">
+                      {{!-- <button class="btn btn-sm btn-info ng-scope">Button</button> --}}
+                    </div>
+                  </div>
+                </rd-widget-header>
+                {{!-- <rd-widget-body class="ng-scope ng-isolate-scope">
+                  <div class="widget-body" ng-class="classes"> --}}
+                    <div class="output">
+                      <pre><code>{{logs}}</code></pre>
+                    </div>
+                  {{!-- </div>
+                </rd-widget-body> --}}
+              </div>
+            </rd-widget>
+          </div>
+          <div class="col-lg-6">
+            <rd-widget>
+              <div class="widget" ng-transclude="">
+                <rd-widget-header icon="fa-plus" title="Extras" class="ng-scope ng-isolate-scope">
+                  <div class="widget-header ng-binding"><i class="fa fa-plus" ng-class="icon"></i> Chargepoint output
+                    <div class="pull-right" ng-transclude="">
+                      {{!-- <button class="btn btn-sm btn-info ng-scope">Button</button> --}}
+                    </div>
+                  </div>
+                </rd-widget-header>
+                {{!-- <rd-widget-body class="ng-scope ng-isolate-scope"> --}}
+                  {{!-- <div class="widget-body" ng-class="classes"> --}}
+                    <div class="output">
+                      <pre><code>{{transactionOutput}}</code></pre>
+                    </div>
+                  {{!-- </div> --}}
+                {{!-- </rd-widget-body> --}}
+              </div>
+            </rd-widget>
+          </div>
+
+
+        </div>
+
+        <!-- ============================ -->
+
+      </div>
+    </div><!-- End Page Content -->
+  </div><!-- End Content Wrapper -->
+  </div><!-- End Page Wrapper -->
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"
+  integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+<script>
+
+  const id = "{{id}}";
+
+  function startTransaction() {
+
+
+    const connectorId = document.getElementById("connector").value;
+    const action = "RemoteStartTransaction"
+
+    window.location.replace(`/${id}?action=${action}&connectorId=${connectorId}`);
+
+  }
+
+  function stopTransaction() {
+
+    const transactionId = document.getElementById("transactionId").value;
+    const action = "RemoteStopTransaction"
+
+    window.location.replace(`/${id}?action=${action}&transactionId=${transactionId}`);
+
+  }
+
+  function getConfiguration() {
+
+    const key = document.getElementById("getConfigurationKey").value;
+    const action = "getConfiguration"
+
+    window.location.replace(`/${id}?action=${action}&key=${key}`);
+
+  }
+
+  function setConfiguration() {
+
+    const key = document.getElementById("setConfigurationKey").value;
+    const value = document.getElementById("setConfigurationValue").value;
+    const action = "setConfiguration"
+
+    window.location.replace(`/${id}?action=${action}&key=${key}&value=${value}`);
+
+  }
+
+</script>
+
+</html>

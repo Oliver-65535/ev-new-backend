@@ -1,3 +1,5 @@
 export * from './encoding.enum'
 export * from './flags.enum'
 export * from './stdio.enum'
+export * from './method.enum'
+export * from './status.enum'

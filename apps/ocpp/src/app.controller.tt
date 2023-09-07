@@ -1,0 +1,344 @@
+import { Controller, Get, Param, Query, Render } from '@nestjs/common';
+
+import { OcppServerService } from './ocpp-cs/ocpp-server/ocpp-server.service';
+
+const configs = [
+  {
+    value: 'NumberOfConnectors',
+    label: 'NumberOfConnectors',
+    title: 'NumberOfConnectors',
+  },
+  {
+    value: 'AllowOfflineTxForUnknownId',
+    label: 'AllowOfflineTxForUnknownId (boolean)',
+    title: 'AllowOfflineTxForUnknownId (boolean)',
+  },
+  {
+    value: 'AuthorizationCacheEnabled',
+    label: 'AuthorizationCacheEnabled (boolean)',
+    title: 'AuthorizationCacheEnabled (boolean)',
+  },
+  {
+    value: 'AuthorizeRemoteTxRequests',
+    label: 'AuthorizeRemoteTxRequests (boolean)',
+    title: 'AuthorizeRemoteTxRequests (boolean)',
+  },
+  {
+    value: 'BlinkRepeat',
+    label: 'BlinkRepeat (in times)',
+    title: 'BlinkRepeat (in times)',
+  },
+  {
+    value: 'ChargeProfileMaxStackLevel',
+    label: 'ChargeProfileMaxStackLevel (integer)',
+    title: 'ChargeProfileMaxStackLevel (integer)',
+  },
+  {
+    value: 'ChargingScheduleAllowedChargingRateUnit',
+    label: 'ChargingScheduleAllowedChargingRateUnit (comma separated list)',
+    title: 'ChargingScheduleAllowedChargingRateUnit (comma separated list)',
+  },
+  {
+    value: 'ChargingScheduleMaxPeriods',
+    label: 'ChargingScheduleMaxPeriods (integer)',
+    title: 'ChargingScheduleMaxPeriods (integer)',
+  },
+  {
+    value: 'ClockAlignedDataInterval',
+    label: 'ClockAlignedDataInterval (in seconds)',
+    title: 'ClockAlignedDataInterval (in seconds)',
+  },
+  {
+    value: 'ConnectionTimeOut',
+    label: 'ConnectionTimeOut (in seconds)',
+    title: 'ConnectionTimeOut (in seconds)',
+  },
+  {
+    value: 'ConnectorPhaseRotation',
+    label: 'ConnectorPhaseRotation (comma separated list)',
+    title: 'ConnectorPhaseRotation (comma separated list)',
+  },
+  {
+    value: 'ConnectorPhaseRotationMaxLength',
+    label: 'ConnectorPhaseRotationMaxLength (integer)',
+    title: 'ConnectorPhaseRotationMaxLength (integer)',
+  },
+  {
+    value: 'ConnectorSwitch3to1PhaseSupported',
+    label: 'ConnectorSwitch3to1PhaseSupported (boolean)',
+    title: 'ConnectorSwitch3to1PhaseSupported (boolean)',
+  },
+  {
+    value: 'GetConfigurationMaxKeys',
+    label: 'GetConfigurationMaxKeys (integer)',
+    title: 'GetConfigurationMaxKeys (integer)',
+  },
+  {
+    value: 'HeartbeatInterval',
+    label: 'HeartbeatInterval (in seconds)',
+    title: 'HeartbeatInterval (in seconds)',
+  },
+  {
+    value: 'LightIntensity',
+    label: 'LightIntensity (in %)',
+    title: 'LightIntensity (in %)',
+  },
+  {
+    value: 'LocalAuthListEnabled',
+    label: 'LocalAuthListEnabled (boolean)',
+    title: 'LocalAuthListEnabled (boolean)',
+  },
+  {
+    value: 'LocalAuthListMaxLength',
+    label: 'LocalAuthListMaxLength (integer)',
+    title: 'LocalAuthListMaxLength (integer)',
+  },
+  {
+    value: 'LocalAuthorizeOffline',
+    label: 'LocalAuthorizeOffline (boolean)',
+    title: 'LocalAuthorizeOffline (boolean)',
+  },
+  {
+    value: 'LocalPreAuthorize',
+    label: 'LocalPreAuthorize (boolean)',
+    title: 'LocalPreAuthorize (boolean)',
+  },
+  {
+    value: 'MaxChargingProfilesInstalled',
+    label: 'MaxChargingProfilesInstalled (integer)',
+    title: 'MaxChargingProfilesInstalled (integer)',
+  },
+  {
+    value: 'MaxEnergyOnInvalidId',
+    label: 'MaxEnergyOnInvalidId (in Wh)',
+    title: 'MaxEnergyOnInvalidId (in Wh)',
+  },
+  {
+    value: 'MeterValueSampleInterval',
+    label: 'MeterValueSampleInterval (in seconds)',
+    title: 'MeterValueSampleInterval (in seconds)',
+  },
+  {
+    value: 'MeterValuesAlignedData',
+    label: 'MeterValuesAlignedData (comma separated list)',
+    title: 'MeterValuesAlignedData (comma separated list)',
+  },
+  {
+    value: 'MeterValuesAlignedDataMaxLength',
+    label: 'MeterValuesAlignedDataMaxLength (integer)',
+    title: 'MeterValuesAlignedDataMaxLength (integer)',
+  },
+  {
+    value: 'MeterValuesSampledData',
+    label: 'MeterValuesSampledData (comma separated list)',
+    title: 'MeterValuesSampledData (comma separated list)',
+  },
+  {
+    value: 'MeterValuesSampledDataMaxLength',
+    label: 'MeterValuesSampledDataMaxLength (integer)',
+    title: 'MeterValuesSampledDataMaxLength (integer)',
+  },
+  {
+    value: 'MeterValuesSignatureContexts',
+    label:
+      'MeterValuesSignatureContexts (comma separated list; specific to OCMF)',
+    title:
+      'MeterValuesSignatureContexts (comma separated list; specific to OCMF)',
+  },
+  {
+    value: 'MinimumStatusDuration',
+    label: 'MinimumStatusDuration (in seconds)',
+    title: 'MinimumStatusDuration (in seconds)',
+  },
+  {
+    value: 'NumberOfConnectors',
+    label: 'NumberOfConnectors (integer)',
+    title: 'NumberOfConnectors (integer)',
+  },
+  {
+    value: 'ReserveConnectorZeroSupported',
+    label: 'ReserveConnectorZeroSupported (boolean)',
+    title: 'ReserveConnectorZeroSupported (boolean)',
+  },
+  {
+    value: 'ResetRetries',
+    label: 'ResetRetries (in times)',
+    title: 'ResetRetries (in times)',
+  },
+  {
+    value: 'SendLocalListMaxLength',
+    label: 'SendLocalListMaxLength (integer)',
+    title: 'SendLocalListMaxLength (integer)',
+  },
+  {
+    value: 'StopTransactionOnEVSideDisconnect',
+    label: 'StopTransactionOnEVSideDisconnect (boolean)',
+    title: 'StopTransactionOnEVSideDisconnect (boolean)',
+  },
+  {
+    value: 'StopTransactionOnInvalidId',
+    label: 'StopTransactionOnInvalidId (boolean)',
+    title: 'StopTransactionOnInvalidId (boolean)',
+  },
+  {
+    value: 'StopTransactionSignatureContexts',
+    label:
+      'StopTransactionSignatureContexts (comma separated list; specific to OCMF)',
+    title:
+      'StopTransactionSignatureContexts (comma separated list; specific to OCMF)',
+  },
+  {
+    value: 'StopTransactionSignatureFormat',
+    label: 'StopTransactionSignatureFormat (string; specific to OCMF)',
+    title: 'StopTransactionSignatureFormat (string; specific to OCMF)',
+  },
+  {
+    value: 'StopTxnAlignedData',
+    label: 'StopTxnAlignedData (comma separated list)',
+    title: 'StopTxnAlignedData (comma separated list)',
+  },
+  {
+    value: 'StopTxnAlignedDataMaxLength',
+    label: 'StopTxnAlignedDataMaxLength (integer)',
+    title: 'StopTxnAlignedDataMaxLength (integer)',
+  },
+  {
+    value: 'StopTxnSampledData',
+    label: 'StopTxnSampledData (comma separated list)',
+    title: 'StopTxnSampledData (comma separated list)',
+  },
+  {
+    value: 'StopTxnSampledDataMaxLength',
+    label: 'StopTxnSampledDataMaxLength (integer)',
+    title: 'StopTxnSampledDataMaxLength (integer)',
+  },
+  {
+    value: 'SupportedFeatureProfiles',
+    label: 'SupportedFeatureProfiles (comma separated list)',
+    title: 'SupportedFeatureProfiles (comma separated list)',
+  },
+  {
+    value: 'SupportedFeatureProfilesMaxLength',
+    label: 'SupportedFeatureProfilesMaxLength (integer)',
+    title: 'SupportedFeatureProfilesMaxLength (integer)',
+  },
+  {
+    value: 'SupportedFileTransferProtocols',
+    label: 'SupportedFileTransferProtocols (comma separated list)',
+    title: 'SupportedFileTransferProtocols (comma separated list)',
+  },
+  {
+    value: 'TransactionMessageAttempts',
+    label: 'TransactionMessageAttempts (in times)',
+    title: 'TransactionMessageAttempts (in times)',
+  },
+  {
+    value: 'TransactionMessageRetryInterval',
+    label: 'TransactionMessageRetryInterval (in seconds)',
+    title: 'TransactionMessageRetryInterval (in seconds)',
+  },
+  {
+    value: 'UnlockConnectorOnEVSideDisconnect',
+    label: 'UnlockConnectorOnEVSideDisconnect (boolean)',
+    title: 'UnlockConnectorOnEVSideDisconnect (boolean)',
+  },
+  {
+    value: 'WebSocketPingInterval',
+    label: 'WebSocketPingInterval (in seconds)',
+    title: 'WebSocketPingInterval (in seconds)',
+  },
+];
+
+@Controller()
+export class AppController {
+  constructor(private readonly oCPPService: OcppServerService) {}
+
+  // @Get()
+  // getHello(): string {
+  //   return this.appService.getHello();
+  // }
+
+  // @Get()
+  // @Render('index')
+  // root(@Query() query: any) {
+  //   const points = this.getChargePoints('0');
+
+  //   console.log(query);
+
+  //   return {
+  //     configs,
+  //     points,
+  //   };
+  // }
+
+  // @Get(':id')
+  // @Render('index')
+  // async rootOne(@Query() query: any, @Param('id') id: string) {
+  //   console.log(query, id);
+  //   const points = this.getChargePoints(id);
+  //   const output = await this.runAction(id, query);
+  //   const logs = this.oCPPService.logs;
+  //   console.log({ output: output });
+
+  //   return {
+  //     id,
+  //     points,
+  //     configs,
+  //     transactionOutput: JSON.stringify(output, null, 4),
+  //     logs: JSON.stringify(logs, null, 4),
+  //   };
+  // }
+
+  // private getChargePoints(id?: string): any {
+  //   const chargePoints = this.oCPPService.chargePoints;
+  //   const active = id;
+  //   const result = Object.keys(chargePoints).map((key) => {
+  //     const res =
+  //       active == key
+  //         ? { charge: key, active: 'charge-active' }
+  //         : { charge: key };
+  //     return res;
+  //   });
+  //   // console.log(result);
+  //   return result;
+  // }
+
+  // private async runAction(id: string, query?: any): Promise<any> {
+  //   let out: any;
+  //   try {
+  //     switch (query.action) {
+  //       case 'RemoteStartTransaction':
+  //         out = await this.oCPPService.startTransaction(
+  //           id,
+  //           parseInt(query.connectorId),
+  //           '111',
+  //         );
+  //         break;
+  //       case 'RemoteStopTransaction':
+  //         out = await this.oCPPService.stopTransaction(
+  //           id,
+  //           parseInt(query.transactionId),
+  //         );
+  //         break;
+  //       case 'getConfiguration':
+  //         out = await this.oCPPService.getConfiguration(id, query.key);
+  //         break;
+  //       case 'setConfiguration':
+  //         out = await this.oCPPService.setConfiguration(
+  //           id,
+  //           query.key,
+  //           query.value,
+  //         );
+  //         break;
+
+  //       default:
+  //         break;
+  //     }
+  //   } catch (error) {
+  //     // console.log(error)
+  //     out = { error: error };
+  //   }
+
+  //   return out;
+  // }
+}

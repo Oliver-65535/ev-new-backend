@@ -6,10 +6,16 @@ database:
   password: 'test'
   database: 'archon-db'
 
+# redis:
+#   flushAll: true
+#   host: 'localhost'
+#   port: 16379
+
 redis:
   flushAll: true
-  host: 'localhost'
-  port: 16379
+  host: '34.94.253.188'
+  port: 6379
+  backendPort: 3021
 
 jwt:
   nonce:

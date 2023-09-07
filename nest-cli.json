@@ -27,6 +27,15 @@
         "tsConfigPath": "apps/api-service/tsconfig.app.json"
       }
     },
+    "ocpp": {
+      "type": "application",
+      "root": "apps/ocpp",
+      "entryFile": "main",
+      "sourceRoot": "apps/ocpp/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/ocpp/tsconfig.app.json"
+      }
+    },
     "profile": {
       "type": "application",
       "root": "apps/profile",

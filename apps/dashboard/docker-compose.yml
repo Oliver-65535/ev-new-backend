@@ -1,0 +1,14 @@
+version: "3.3"
+
+services:
+  
+  proto-gen:
+    image: juanjodiaz/grpc-web-generator
+    container_name: proto-generator
+    # restart: always
+    environment:
+      - protofile=ocpp.proto
+    # ports:
+    #   - "8086:8086"
+    volumes:
+      - ./nnn:/protofile

@@ -1,0 +1,68 @@
+import {
+  ClientProxy,
+  ClientProxyFactory,
+  Transport,
+} from '@nestjs/microservices';
+import { HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { RPCServer, createRPCError } from 'ocpp-rpc';
+
+import { OcppCallService } from './ocpp/ocpp-calls.servise';
+import { OcppHandlerService } from './ocpp/ocpp-handlers.service';
+
+require('dotenv').config();
+
+const randomString = Array(48)
+  .fill(null)
+  .map(() => Math.round(Math.random() * 16).toString(16))
+  .join('');
+
+const rpcServer = new RPCServer({
+  protocols: ['ocpp1.6', 'ocpp1.5'], // server accepts ocpp1.6 subprotocol
+  strictMode: false, // enable strict validation of requests & responses
+  callTimeoutMs: 1000 * 86400,
+  pingIntervalMs: 1000 * 30,
+  deferPingsOnActivity: false,
+  respondWithDetailedErrors: false,
+  callConcurrency: 1,
+  maxBadMessages: Infinity,
+  strictModeValidators: [],
+});
+
+// rpcServer.auth((accept, reject, handshake) => {
+//   // console.log('rpcServer.auth', accept, handshake);
+//   accept();
+// });
+
+@Injectable()
+export class OcppServerService {
+  redisClient: ClientProxy;
+
+  constructor(private readonly ocppHandlerService: OcppHandlerService) {
+    // @Inject('OcppServerService') private readonly ChargePoint: OcppCallService,
+    // this.redisClient = ClientProxyFactory.create({
+    //   transport: Transport.REDIS,
+    //   options: {
+    //     host: process.env.REDIS_HOST,
+    //     port: Number(process.env.REDIS_PORT),
+    //   },
+    // });
+  }
+
+  chargePoints: Record<string, OcppCallService> = {};
+
+  async runMethodCall({ chargePointId, methodCall, params }) {
+    const response = this.chargePoints[chargePointId].call({
+      methodCall,
+      params,
+    });
+    return response;
+  }
+
+  // async getStart() {
+  //   rpcServer.on('client', async (client) => {
+  //     this.chargePoints[client.identity] = new OcppCallService(client);
+  //     this.ocppHandlerService.addHandlers(client);
+  //   });
+  //   await rpcServer.listen(Number(process.env.OCPP_WS_PORT));
+  // }
+}

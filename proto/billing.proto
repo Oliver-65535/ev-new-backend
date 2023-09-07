@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package billing;
+
+
+service BillingService {
+  
+  rpc TransactionStarted (TransactionStartedRequest) returns (TransactionStartedResponse) {}
+  rpc PaymentReceived (PaymentReceivedRequest) returns (PaymentReceivedResponse) {}
+  rpc RunStartTransaction (RunStartTransactionRequest) returns (RunStartTransactionResponse) {}
+  rpc RunStopTransaction (RunStopTransactionRequest) returns (RunStopTransactionResponse) {}
+}
+
+message Empty {
+}
+
+message TransactionStartedRequest {
+  string chargePointId = 1;
+  uint32 connectorId = 2;
+  string idTag = 3;
+  // int32 transactionId = 4;
+  // int32 reservationId = 5;
+}
+
+message TransactionStartedResponse {
+  uint32 httpStatus = 1;
+  uint32 transactionId = 2;
+  repeated string error = 3;
+}
+
+// StopTransaction
+
+message PaymentReceivedRequest {
+  string chargePointId = 1;
+  uint32 connectorId = 2;
+  uint32 userId = 3;
+  float amount = 4;
+}
+
+message PaymentReceivedResponse {
+  uint32 httpStatus = 1;
+  Status status = 2;
+  repeated string error = 3;
+}
+
+
+message RunStartTransactionRequest {
+  string chargePointId = 1;
+  uint32 connectorId = 2;
+  uint32 userId = 3;
+}
+
+message RunStartTransactionResponse {
+  uint32 httpStatus = 1;
+  Status status = 2;
+  repeated string error = 3;
+}
+
+message RunStopTransactionRequest {
+  string chargePointId = 1;
+  uint32 connectorId = 2;
+  uint32 userId = 3;
+}
+
+message RunStopTransactionResponse {
+  uint32 httpStatus = 1;
+  Status status = 2;
+  repeated string error = 3;
+}
+
+
+enum Status {
+  Accepted = 0;
+  Rejected = 1;
+  Unlocked = 2;
+  Failed = 3;
+}

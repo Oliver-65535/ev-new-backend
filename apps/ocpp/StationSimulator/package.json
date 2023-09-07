@@ -1,0 +1,9 @@
+{
+  "name": "StationSimulator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "ocpp-rpc": "^2.0.0"
+  }
+}
