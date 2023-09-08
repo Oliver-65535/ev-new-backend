@@ -7,11 +7,7 @@ import { DataSource } from 'typeorm';
 
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
 
-import { ChargePointEntity } from '../chargePoint/chargePoint/chargePoint.entity';
-import { ConnectorEntity } from '../chargePoint/connector/connector.entity';
-import { SiteEntity } from '../site/site/site.entity';
-
-const GRAPHQL_URL = 'http://35.236.79.246:3012/graphql';
+import { ChargePointEntity, ConnectorEntity, SiteEntity } from '@app/entities';
 
 @Injectable()
 export class CustomSiteGraphQLService {

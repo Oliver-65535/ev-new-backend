@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
-import { UserEntity } from 'src/common/user/user.entity';
+import { UserEntity } from '@app/entities';
 import { LoginResponseDto } from './dto/login-response.dto';
 import { AuthenticatedUser, JwtPayload } from './auth.interfaces';
-import { UserDTO } from 'src/common/user/user-graphql/dto/user.dto';
+import { UserDTO } from '../common/user/user-graphql/dto/user.dto';
 
 @Injectable()
 export class AuthService {

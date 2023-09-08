@@ -9,7 +9,7 @@ import { Geometry, Point } from 'geojson';
 import { IsBoolean, IsString, MaxLength } from 'class-validator';
 
 import GraphQLJSON from 'graphql-type-json';
-import { UserContext } from 'src/auth/auth.interfaces';
+import { UserContext } from '../../../../../auth/auth.interfaces';
 
 @InputType('SiteInput')
 @BeforeCreateOne(

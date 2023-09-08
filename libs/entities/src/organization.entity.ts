@@ -13,9 +13,9 @@ import {
 } from 'typeorm';
 import { Geometry, Point } from 'geojson';
 
-import { ConnectorEntity } from 'src/common/chargePoint/connector/connector.entity';
-import { SiteEntity } from '../../common/site/site/site.entity';
-import { UserEntity } from '../user/user.entity';
+import { ConnectorEntity } from './connector.entity';
+import { SiteEntity } from './site.entity';
+import { UserEntity } from './user.entity';
 
 @Entity('Organization')
 export class OrganizationEntity extends BaseEntity {

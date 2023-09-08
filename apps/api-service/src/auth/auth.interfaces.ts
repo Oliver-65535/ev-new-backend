@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/common/user/user.entity';
+import { UserEntity } from '@app/entities';
 
 export type AuthenticatedUser = Pick<
   UserEntity,

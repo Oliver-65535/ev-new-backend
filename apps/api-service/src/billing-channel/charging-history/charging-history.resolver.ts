@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
 import { CurrentJwtUser } from '../../common/decorators';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { AuthenticatedUser } from 'src/auth/auth.interfaces';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+import { AuthenticatedUser } from '../../auth/auth.interfaces';
 import { ChargingHistoryDTO } from './charging-history-graphql/dto/charging-history.dto';
 import {
   ChargingHistoryInputDTO,

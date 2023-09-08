@@ -13,9 +13,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { ChargePointEntity } from '../chargePoint/chargePoint.entity';
-import { SiteEntity } from 'src/common/site/site/site.entity';
-import { UserEntity } from 'src/common/user/user.entity';
+import { ChargePointEntity } from './charger.entity';
+import { SiteEntity } from './site.entity';
+import { UserEntity } from './user.entity';
 
 @Entity('Connector')
 export class ConnectorEntity extends BaseEntity {

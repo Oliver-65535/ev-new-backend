@@ -1,10 +1,10 @@
-import { ConnectorEntity } from './connector.entity';
+import { ConnectorEntity } from '@app/entities';
 import { ConnectorResolver } from './connector.resolver';
 import { ConnectorService } from './connector.service';
 import { JwtModule } from '../../jwt/jwt.module';
 import { Module } from '@nestjs/common';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
-import { OCPPModule } from 'src/modules-microservices/ocpp-cs-service/ocpp-cs.module';
+import { OCPPModule } from '../../../modules-microservices/ocpp-cs-service/ocpp-cs.module';
 import { TasksService } from './tasks.service';
 
 @Module({

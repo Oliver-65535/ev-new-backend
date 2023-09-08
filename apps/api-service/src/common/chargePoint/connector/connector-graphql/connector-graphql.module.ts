@@ -1,7 +1,7 @@
 import { ConnectorDTO } from './dto/connector.dto';
-import { ConnectorEntity } from 'src/common/chargePoint/connector/connector.entity';
+import { ConnectorEntity } from '@app/entities';
 import { ConnectorInputDTO } from './dto/connector.input';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../../../auth/jwt-auth.guard';
 import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';

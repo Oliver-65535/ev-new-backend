@@ -23,7 +23,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './common/user/user.module';
 
-import ormconfig = require('../ormconfig');
+import ormconfig = require('../../../ormconfig');
 
 
 @Module({

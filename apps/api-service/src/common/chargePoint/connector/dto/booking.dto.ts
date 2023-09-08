@@ -1,7 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
-import { ConnectorEntity } from '../connector.entity';
-import { billing } from 'src/proto/billing';
+import { ConnectorEntity } from '../../../../../../../libs/entities/src/connector.entity';
+import { billing } from '../../../../proto/billing';
 
 @ObjectType('BookingResponse')
 export class BookingResponseDto {

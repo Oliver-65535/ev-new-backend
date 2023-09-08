@@ -6,7 +6,7 @@ import {
 } from '@nestjs-query/query-graphql';
 import { Field, InputType } from '@nestjs/graphql';
 
-import { UserContext } from 'src/auth/auth.interfaces';
+import { UserContext } from '../../../../auth/auth.interfaces';
 
 @InputType('ChargePointInput')
 @BeforeCreateOne(

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SessionHistoryEntity } from './charging-history.entity';
+import { SessionHistoryEntity } from '../../../../../libs/entities/src/charging-history.entity';
 
 @Injectable()
 export class ChargingHistoryService {

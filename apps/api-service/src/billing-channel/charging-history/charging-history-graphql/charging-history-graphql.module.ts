@@ -2,7 +2,7 @@ import { ChargingHistoryDTO } from './dto/charging-history.dto';
 import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
-import { SessionHistoryEntity } from 'src/billing-channel/charging-history/charging-history.entity';
+import { SessionHistoryEntity } from '@app/entities';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({

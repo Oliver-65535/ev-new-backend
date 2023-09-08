@@ -2,7 +2,7 @@ import { ChargingHistoryResolver } from './charging-history.resolver';
 import { ChargingHistoryService } from './charging-history.service';
 import { Module } from '@nestjs/common';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
-import { SessionHistoryEntity } from '../charging-history/charging-history.entity';
+import { SessionHistoryEntity } from '../../../../../libs/entities/src/charging-history.entity';
 
 @Module({
   imports: [NestjsQueryTypeOrmModule.forFeature([SessionHistoryEntity])],

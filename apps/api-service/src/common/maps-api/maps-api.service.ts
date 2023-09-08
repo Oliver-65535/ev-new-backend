@@ -7,8 +7,8 @@ import { DataSource } from 'typeorm';
 
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
 
-import { ChargePointEntity } from '../chargePoint/chargePoint/chargePoint.entity';
-import { ConnectorEntity } from '../chargePoint/connector/connector.entity';
+import { ChargePointEntity } from '../../../../../libs/entities/src/charger.entity';
+import { ConnectorEntity } from '../../../../../libs/entities/src/connector.entity';
 import { filter } from 'rxjs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

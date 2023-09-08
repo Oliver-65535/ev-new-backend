@@ -10,9 +10,9 @@ import {
 } from '@nestjs-query/query-graphql';
 import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 
-import { ChargePointDTO } from 'src/common/chargePoint/chargePoint/dto/chargePoint.dto';
-import { SiteDTO } from 'src/common/site/site/site-graphql/dto/site.dto';
-import { UserContext } from 'src/auth/auth.interfaces';
+import { ChargePointDTO } from '../../../../../common/chargePoint/chargePoint/dto/chargePoint.dto';
+import { SiteDTO } from '../../../../../common/site/site/site-graphql/dto/site.dto';
+import { UserContext } from '../../../../../auth/auth.interfaces';
 
 @ObjectType('Connector')
 @Authorize({

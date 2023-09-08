@@ -10,7 +10,7 @@ export class JwtService {
     try {
       this.publicKey = readFileSync('./public_key.pem', 'utf8');
     } catch (error) {
-      console.error(`Error reading JWT keys: ${error.message}`);
+      console.error(`Error reading JWT keys: ${error}`);
     }
   }
 

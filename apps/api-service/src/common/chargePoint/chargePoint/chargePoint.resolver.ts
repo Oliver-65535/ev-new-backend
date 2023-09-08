@@ -1,8 +1,8 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { CurrentJwtUser } from '../../decorators';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { AuthenticatedUser } from 'src/auth/auth.interfaces';
+import { JwtAuthGuard } from '../../../auth/jwt-auth.guard';
+import { AuthenticatedUser } from '../../../auth/auth.interfaces';
 import { ChargePointService } from './chargePoint.service';
 import {
   CheckChargerIdExistInputDto,

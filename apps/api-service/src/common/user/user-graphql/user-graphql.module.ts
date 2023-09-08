@@ -3,7 +3,7 @@ import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserDTO } from './dto/user.dto';
-import { UserEntity } from 'src/common/user/user.entity';
+import { UserEntity } from '@app/entities';
 
 @Module({
   imports: [

@@ -1,4 +1,4 @@
-import { ChargePointEntity } from './chargePoint.entity';
+import { ChargePointEntity } from '../../../../../../libs/entities/src/charger.entity';
 import { ChargePointResolver } from './chargePoint.resolver';
 import { ChargePointService } from './chargePoint.service';
 import { Module } from '@nestjs/common';

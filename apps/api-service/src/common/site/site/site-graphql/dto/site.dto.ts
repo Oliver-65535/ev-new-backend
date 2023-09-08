@@ -10,10 +10,10 @@ import {
 } from '@nestjs-query/query-graphql';
 import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 
-import { ChargePointDTO } from 'src/common/chargePoint/chargePoint/dto/chargePoint.dto';
-import { ConnectorDTO } from 'src/common/chargePoint/connector/connector-graphql/dto/connector.dto';
+import { ChargePointDTO } from '../../../../chargePoint/chargePoint/dto/chargePoint.dto';
+import { ConnectorDTO } from '../../../../chargePoint/connector/connector-graphql/dto/connector.dto';
 import GraphQLJSON from 'graphql-type-json';
-import { UserContext } from 'src/auth/auth.interfaces';
+import { UserContext } from '../../../../../auth/auth.interfaces';
 
 @ObjectType('Site')
 @Authorize({

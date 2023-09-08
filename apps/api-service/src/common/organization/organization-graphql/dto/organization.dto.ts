@@ -11,8 +11,8 @@ import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 import { Geometry, Point } from 'geojson';
 
 import GraphQLJSON from 'graphql-type-json';
-import { SiteDTO } from 'src/common/site/site/site-graphql/dto/site.dto';
-import { UserContext } from 'src/auth/auth.interfaces';
+import { SiteDTO } from '../../../../common/site/site/site-graphql/dto/site.dto';
+import { UserContext } from '../../../../auth/auth.interfaces';
 
 @ObjectType('Organization')
 @Authorize({

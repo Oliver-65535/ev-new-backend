@@ -1,9 +1,9 @@
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../../../auth/jwt-auth.guard';
 import { Module } from '@nestjs/common';
 import { NestjsQueryGraphQLModule } from '@nestjs-query/query-graphql';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
 import { OrganizationDTO } from './dto/organization.dto';
-import { OrganizationEntity } from 'src/common/organization/organization.entity';
+import { OrganizationEntity } from '@app/entities';
 import { OrganizationInputDTO } from './dto/organization.input';
 import { TypeOrmModule } from '@nestjs/typeorm';
 

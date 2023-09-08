@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LessThanOrEqual, Repository } from 'typeorm';
-import { ConnectorEntity } from './connector.entity';
+import { ConnectorEntity } from '../../../../../../libs/entities/src/connector.entity';
 // import { Client, ClientGrpc } from '@nestjs/microservices';
 // import { grpcBillingClientOptions } from '../../../modules-microservices/grpc-client-config/ocpp-grpc-client';
-import { ocpp } from 'src/proto/ocpp';
-import { OCPPService } from 'src/modules-microservices/ocpp-cs-service/ocpp-cs.service';
+import { ocpp } from '../../../proto/ocpp';
+import { OCPPService } from '../../../modules-microservices/ocpp-cs-service/ocpp-cs.service';
 
 @Injectable()
 export class ConnectorService {

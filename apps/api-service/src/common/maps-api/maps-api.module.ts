@@ -1,5 +1,5 @@
 import { ChargePointModule } from '../chargePoint/chargePoint/chargePoint.module';
-import { ConnectorEntity } from '../chargePoint/connector/connector.entity';
+import { ConnectorEntity } from '../../../../../libs/entities/src/connector.entity';
 import { MapsApiResolver } from './maps-api.resolver';
 import { MapsApiService } from './maps-api.service';
 import { Module } from '@nestjs/common';

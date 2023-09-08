@@ -1,19 +1,16 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { CurrentJwtUser } from '../../decorators';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { AuthenticatedUser } from 'src/auth/auth.interfaces';
-import { ConnectorDTO } from './connector-graphql/dto/connector.dto';
+import { JwtAuthGuard } from '../../../auth/jwt-auth.guard';
+import { AuthenticatedUser } from '../../../auth/auth.interfaces';
 import { ConnectorService } from './connector.service';
-import { OCPPService } from 'src/modules-microservices/ocpp-cs-service/ocpp-cs.service';
+
 import {
   BookingInputDto,
   BookingResponseDto,
   TransactionByUserInputDTO,
   TransactionByUserResponseDTO,
 } from './dto/booking.dto';
-import { ConnectorEntity } from './connector.entity';
-import { billing } from 'src/proto/billing';
 
 @Resolver()
 export class ConnectorResolver {

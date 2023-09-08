@@ -13,7 +13,7 @@ import { Field, GraphQLISODateTime, ID, ObjectType } from '@nestjs/graphql';
 
 import { ConnectorDTO } from '../../connector/connector-graphql/dto/connector.dto';
 import GraphQLJSON from 'graphql-type-json';
-import { UserContext } from 'src/auth/auth.interfaces';
+import { UserContext } from '../../../../auth/auth.interfaces';
 
 @ObjectType('ChargePoint')
 @Authorize({

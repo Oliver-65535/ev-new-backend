@@ -7,8 +7,8 @@ import {
   Subscription,
 } from '@nestjs/graphql';
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { AuthenticatedUser } from 'src/auth/auth.interfaces';
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard';
+import { AuthenticatedUser } from '../../auth/auth.interfaces';
 import { CurrentJwtUser } from '../decorators';
 // import {
 //   BookingProgressResponseDto,

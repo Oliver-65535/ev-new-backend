@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { NestjsQueryTypeOrmModule } from '@nestjs-query/query-typeorm';
-import { UserEntity } from '../user/user.entity';
+import { UserEntity } from '../../../../../libs/entities/src/user.entity';
 import { UserResolver } from './user.resolver';
 
 @Module({

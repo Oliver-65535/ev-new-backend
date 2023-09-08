@@ -6,10 +6,9 @@ import { Client, ClientGrpc } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PubSub } from 'graphql-subscriptions';
 import { Repository } from 'typeorm';
-import { ChargePointEntity } from 'src/common/chargePoint/chargePoint/chargePoint.entity';
-import { ConnectorEntity } from 'src/common/chargePoint/connector/connector.entity';
-import { MapsApiResolver } from 'src/common/maps-api/maps-api.resolver';
-import { ocpp } from 'src/proto/ocpp';
+import { ChargePointEntity,ConnectorEntity } from '@app/entities';
+import { MapsApiResolver } from '../../common/maps-api/maps-api.resolver';
+import { ocpp } from '../../../../../proto/ocpp';
 
 const pubSub = new PubSub();
 

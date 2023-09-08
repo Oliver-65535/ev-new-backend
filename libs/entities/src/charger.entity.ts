@@ -11,10 +11,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { ConnectorEntity } from '../connector/connector.entity';
+import { ConnectorEntity } from './connector.entity';
 import { Point } from 'geojson';
-import { SiteEntity } from 'src/common/site/site/site.entity';
-import { UserEntity } from 'src/common/user/user.entity';
+import { SiteEntity } from './site.entity';
+import { UserEntity } from './user.entity';
 
 @Entity('ChargePoint')
 export class ChargePointEntity extends BaseEntity {
