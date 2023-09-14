@@ -1,3 +1,4 @@
+import { Status } from '@app/common';
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
 import { ConnectorEntity } from '../../../../../../../libs/entities/src/connector.entity';
@@ -34,8 +35,7 @@ export class TransactionByUserInputDTO {
 
 @ObjectType('TransactionByUserResponse')
 export class TransactionByUserResponseDTO
-  implements billing.RunStartTransactionResponse
 {
   @Field({ nullable: true })
-  status?: billing.Status;
+  status: string;
 }

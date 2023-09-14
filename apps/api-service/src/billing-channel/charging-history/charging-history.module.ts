@@ -7,6 +7,6 @@ import { SessionHistoryEntity } from '../../../../../libs/entities/src/charging-
 @Module({
   imports: [NestjsQueryTypeOrmModule.forFeature([SessionHistoryEntity])],
   providers: [ChargingHistoryResolver, ChargingHistoryService],
-  exports: [NestjsQueryTypeOrmModule.forFeature([SessionHistoryEntity])],
+  exports: [ChargingHistoryService],
 })
 export class ChargingHistoryModule {}

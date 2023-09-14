@@ -32,5 +32,5 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   ],
   exports: [TypeOrmModule],
 })
-export class GraphqlСhargePointModule {}
+export class GraphqlChargePointModule {}
 // console.log(NestjsQueryGraphQLModule.forFeature);

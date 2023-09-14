@@ -1,10 +1,10 @@
 database:
   type: 'postgres'
-  host: 'localhost'
-  port: 15432
-  username: 'postgres'
-  password: 'test'
-  database: 'archon-db'
+  host: '34.94.253.188'
+  port: 5440
+  username: 'ev-database-user'
+  password: 'ev-database-password'
+  database: 'ev-database'
 
 # redis:
 #   flushAll: true

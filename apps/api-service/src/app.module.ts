@@ -10,27 +10,25 @@ import { ConfigModule } from '@nestjs/config';
 import { ConnectorModule } from './common/chargePoint/connector/connector.module';
 import { CustomSiteGraphQLModule } from './common/custom-site-graphql/custom-site-graphql.module';
 import { GraphQLModule } from '@nestjs/graphql';
-import { GraphqlChargingHistoryModule } from './billing-channel/charging-history/charging-history-graphql/charging-history-graphql.module';
+// import { GraphqlChargingHistoryModule } from './billing-channel/charging-history/charging-history-graphql/charging-history-graphql.module';
 import { GraphqlConnectorModule } from './common/chargePoint/connector/connector-graphql/connector-graphql.module';
 import { GraphqlOrganizationModule } from './common/organization/organization-graphql/organization-graphql.module';
 import { GraphqlSiteModule } from './common/site/site/site-graphql/site-graphql.module';
 import { GraphqlUserModule } from './common/user/user-graphql/user-graphql.module';
-import { GraphqlСhargePointModule } from './common/chargePoint/chargePoint/chargePoint-graphql.module';
+import { GraphqlChargePointModule } from './common/chargePoint/chargePoint/chargePoint-graphql.module';
 import { MapsApiModule } from './common/maps-api/maps-api.module';
 import { Module } from '@nestjs/common';
 import { OCPPModule } from './modules-microservices/ocpp-cs-service/ocpp-cs.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './common/user/user.module';
-
-import ormconfig = require('../../../ormconfig');
-
+import { postgresConfiguration } from '@app/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot(ormconfig[0]),
-    TypeOrmModule.forRoot(ormconfig[1]),
+    TypeOrmModule.forRoot(postgresConfiguration),
+    // TypeOrmModule.forRoot(ormconfig[1]),
     GraphQLModule.forRoot({
       // set to true to automatically generate schema
       debug: false,
@@ -44,10 +42,10 @@ import ormconfig = require('../../../ormconfig');
       installSubscriptionHandlers: true,
     }),
     GraphqlSiteModule,
-    GraphqlСhargePointModule,
+    GraphqlChargePointModule,
     GraphqlConnectorModule,
     GraphqlUserModule,
-    GraphqlChargingHistoryModule,
+    // GraphqlChargingHistoryModule,
     GraphqlOrganizationModule,
     CustomSiteGraphQLModule,
     // UserModule,

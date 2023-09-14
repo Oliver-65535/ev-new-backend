@@ -39,7 +39,9 @@
       "@app/articles": ["libs/articles/src"],
       "@app/articles/*": ["libs/articles/src/*"],
       "@app/auth-wallet": ["libs/auth-wallet/src"],
-      "@app/auth-wallet/*": ["libs/auth-wallet/src/*"]
+      "@app/auth-wallet/*": ["libs/auth-wallet/src/*"],
+      "@app/repositories": ["libs/user/src"],
+      "@app/repositories/*": ["libs/user/src/*"]
     }
   }
 }

@@ -12,6 +12,10 @@ import {
   TransactionByUserResponseDTO,
 } from './dto/booking.dto';
 
+type Status = {
+  status:string
+}
+
 @Resolver()
 export class ConnectorResolver {
   constructor(private readonly connectorService: ConnectorService) {}
@@ -80,6 +84,6 @@ export class ConnectorResolver {
       jwtUser.id,
     );
 
-    return transaction.data;
+    return {status:"Accepted"};
   }
 }
