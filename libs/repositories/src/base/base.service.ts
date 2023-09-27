@@ -18,6 +18,10 @@ export abstract class BaseAbstractRepository<T extends HasId>
     this.entity = entity;
   }
 
+  public async query(query: string,  parameters: any[]){
+    return await this.entity.query(query, parameters)
+  }
+
   public async save(data: DeepPartial<T>): Promise<T> {
     return await this.entity.save(data);
   }

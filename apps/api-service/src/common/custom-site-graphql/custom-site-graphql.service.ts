@@ -8,6 +8,7 @@ import { DataSource } from 'typeorm';
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
 
 import { ChargePointEntity, ConnectorEntity, SiteEntity } from '@app/entities';
+import { MapsApiResolver } from '../maps-api/maps-api.resolver';
 
 @Injectable()
 export class CustomSiteGraphQLService {
@@ -18,6 +19,7 @@ export class CustomSiteGraphQLService {
     private siteService: QueryService<SiteEntity>,
     @InjectQueryService(ConnectorEntity)
     private connectorService: QueryService<ConnectorEntity>,
+    private readonly mapsApiResolver: MapsApiResolver,
   ) {}
 
   async createOrUpdateSiteWithChargePoints(input, user): Promise<any> {
@@ -36,6 +38,7 @@ export class CustomSiteGraphQLService {
     );
 
     console.log('FFFFF', connectors);
+    await this.mapsApiResolver.pubMarkerUpdated(site.id)  
     return await { siteId: site.id };
   }
 

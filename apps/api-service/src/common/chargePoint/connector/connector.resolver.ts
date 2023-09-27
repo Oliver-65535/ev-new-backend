@@ -69,7 +69,7 @@ export class ConnectorResolver {
     //   jwtUser.id,
     // );
 
-    return transaction.data;
+    return {status: 'Accepted'};
   }
 
   @UseGuards(JwtAuthGuard)
