@@ -1,4 +1,6 @@
 # compiled output
+/**/node_modules
+/**/dist
 /dist
 /node_modules
 /files
