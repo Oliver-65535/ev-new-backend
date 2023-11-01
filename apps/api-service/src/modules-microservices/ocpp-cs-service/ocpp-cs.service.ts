@@ -6,9 +6,10 @@ import { Client, ClientGrpc } from '@nestjs/microservices';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PubSub } from 'graphql-subscriptions';
 import { Repository } from 'typeorm';
-import { ChargePointEntity,ConnectorEntity } from '@app/entities';
+import { ChargePointEntity, ConnectorEntity } from '@app/entities';
 import { MapsApiResolver } from '../../common/maps-api/maps-api.resolver';
 import { ocpp } from '../../../../../proto/ocpp';
+import { eventSubsribeConnectorStatus } from '../../common/chargePoint/connector/connector.resolver';
 
 const pubSub = new PubSub();
 
@@ -33,15 +34,14 @@ export class OCPPService implements OnModuleInit {
   private readonly clientOcpp: ClientGrpc;
   // private readonly ocppEvent;
   onModuleInit() {
-    this.ocppService =
-      this.clientOcpp.getService<ocpp.OcppService>('OcppService');
-    console.log(`The module has been initialized.`);
-
-    const ocppEvent = this.ocppService.logEventSream({});
-    ocppEvent.subscribe((e) => {
-      this.distributorEvenst(e.event);
-      console.log('WWWWWWWWWWWWWWWWWWWWWWWWWW', e.event);
-    });
+    // this.ocppService =
+    //   this.clientOcpp.getService<ocpp.OcppService>('OcppService');
+    // console.log(`The module has been initialized.`);
+    // const ocppEvent = this.ocppService.logEventSream({});
+    // ocppEvent.subscribe(e => {
+    //   this.distributorEvenst(e.event);
+    //   console.log('WWWWWWWWWWWWWWWWWWWWWWWWWW', e.event);
+    // });
   }
 
   async runStartTransactionByUser(payload): Promise<any> {
@@ -68,7 +68,9 @@ export class OCPPService implements OnModuleInit {
   }
 
   newEventChargeProgress(data) {
-    this.mapsApiResolver.pubBookingProgressUpdated(data);
+    pubSub.publish('chargingProgressUpdated', {
+      chargingProgressUpdated: data,
+    });
   }
 
   newEvent(data) {
@@ -77,9 +79,9 @@ export class OCPPService implements OnModuleInit {
     this.distributorEvenst(data);
   }
 
-  distributorEvenst(jsondata) {
-    const data = JSON.parse(jsondata);
-    console.log('DATASSSSSSSS', data);
+  distributorEvenst(data) {
+    // const data = JSON.parse(jsondata);
+    // console.log('DATASSSSSSSS', data);
     switch (data.method) {
       case 'BootNotification':
         this.stationConnect(data);
@@ -103,7 +105,7 @@ export class OCPPService implements OnModuleInit {
     const chargePoint = await this.chargePointEntityRepository.findOneBy({
       chargePointHardwareId: data.chargeBoxId,
     });
-    console.log(chargePoint);
+    // console.log(chargePoint);
     if (chargePoint == undefined) return;
     chargePoint.status = 'Connected';
 
@@ -146,15 +148,19 @@ export class OCPPService implements OnModuleInit {
       .updateOne(connector.id, {
         statusName: data.params.status,
       })
-      .then((e) => {
+      .then(e => {
         this.mapsApiResolver.pubMarkerUpdated(connector.siteId);
+        eventSubsribeConnectorStatus({
+          id: connector.id,
+          status: connector.statusName,
+        });
         return e;
       });
     console.log(
       'QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ',
       connectorUpdated,
     );
- 
+
     // connector.statusName = data.params.status;
 
     // return await this.connectorEntityRepository.save(connector).then((e) => {
@@ -162,6 +168,13 @@ export class OCPPService implements OnModuleInit {
     //   return e;
     // });
     return connectorUpdated;
+  }
+
+  newEventSubscribeStatusNotification(data) {
+    console.log('newEventSubscribeStatusNotification', { data });
+    pubSub.publish('subsribeConnectorStatus', {
+      subsribeConnectorStatus: data,
+    });
   }
 
   // async createStartFunctionEvent(data: any): Promise<void> {
@@ -178,39 +191,39 @@ export class OCPPService implements OnModuleInit {
   //     .then((message) => console.log(message));
   // }
 
-  async queryConnectorFetch(hargePointHardwareId, connectorId) {
-    const queryCreateConnector = JSON.stringify({
-      query: `query{
-        connectors(filter:{chargePointHardwareId:{eq:"${hargePointHardwareId}"},connectorId:{eq:${connectorId}}}){
-          id
-        }
-      }`,
-    });
-    const response = await fetch('http://35.236.79.246:3012/graphql', {
-      headers: { 'content-type': 'application/json' },
-      method: 'POST',
-      body: queryCreateConnector,
-    });
-    const responseJson = await response.json();
-    // console.log(responseJson);
-    return responseJson.data;
-  }
+  // async queryConnectorFetch(hargePointHardwareId, connectorId) {
+  //   const queryCreateConnector = JSON.stringify({
+  //     query: `query{
+  //       connectors(filter:{chargePointHardwareId:{eq:"${hargePointHardwareId}"},connectorId:{eq:${connectorId}}}){
+  //         id
+  //       }
+  //     }`,
+  //   });
+  //   const response = await fetch('http://35.236.79.246:3012/graphql', {
+  //     headers: { 'content-type': 'application/json' },
+  //     method: 'POST',
+  //     body: queryCreateConnector,
+  //   });
+  //   const responseJson = await response.json();
+  //   // console.log(responseJson);
+  //   return responseJson.data;
+  // }
 
-  async updateConnectorFetch(connectorId, status) {
-    const queryCreateConnector = JSON.stringify({
-      query: `mutation{
-        updateOneConnector(input:{id:${connectorId},update:{statusName:"${status}"}}){
-          id
-        }
-      }`,
-    });
-    const response = await fetch('http://35.236.79.246:3012/graphql', {
-      headers: { 'content-type': 'application/json' },
-      method: 'POST',
-      body: queryCreateConnector,
-    });
-    const responseJson = await response.json();
-    console.log(responseJson);
-    return responseJson.data;
-  }
+  // async updateConnectorFetch(connectorId, status) {
+  //   const queryCreateConnector = JSON.stringify({
+  //     query: `mutation{
+  //       updateOneConnector(input:{id:${connectorId},update:{statusName:"${status}"}}){
+  //         id
+  //       }
+  //     }`,
+  //   });
+  //   const response = await fetch('http://35.236.79.246:3012/graphql', {
+  //     headers: { 'content-type': 'application/json' },
+  //     method: 'POST',
+  //     body: queryCreateConnector,
+  //   });
+  //   const responseJson = await response.json();
+  //   console.log(responseJson);
+  //   return responseJson.data;
+  // }
 }

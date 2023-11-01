@@ -6,4 +6,5 @@ export * from './keyPaths.config';
 export * from './openpgp.config';
 export * from './vault.config';
 export * from './redis.config';
-export * from './session-expiration-time.config'
+export * from './session-expiration-time.config';
+export * from './sms.config';

@@ -6,3 +6,4 @@ export * from './keysPath.interface';
 export * from './openpgp.interface';
 export * from './vault-config.interface';
 export * from './redis-config.interface';
+export * from './sms-config.interface';

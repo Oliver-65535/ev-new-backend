@@ -3,8 +3,8 @@ import { Method as m, MethodCall as mc } from '@app/common';
 import { Status as s } from '@app/common';
 import { transactions } from './ocpp-task.service';
 
-export const findTransaction = (params) => {
-  const index = transactions.findIndex((e) => {
+export const findTransaction = params => {
+  const index = transactions.findIndex(e => {
     // console.log(
     //   'FIND TRANSACTION',
     //   params.connectorId
@@ -72,7 +72,7 @@ export const updateTransaction = (index, params) => {
   transactions[index].status = params.status ?? transactions[index].status;
 };
 
-export const delTransaction = (index) => {
+export const delTransaction = index => {
   setTimeout(() => {
     transactions.splice(index, 1);
   }, 3000);

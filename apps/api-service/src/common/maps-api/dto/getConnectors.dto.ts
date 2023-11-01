@@ -7,7 +7,7 @@ export class ConnectorsOnMarkerResponseDto {
   @Field()
   siteid: number;
 
-  @Field((type) => GraphQLJSON)
+  @Field(type => GraphQLJSON)
   location!: JSON;
 
   @Field({ nullable: true })
@@ -44,8 +44,8 @@ export class SiteResponseDto {
   total: number;
 }
 
-@ObjectType('BookingProgressResponse')
-export class BookingProgressResponseDto {
+@ObjectType('ChargingProgressResponse')
+export class ChargingProgressResponseDto {
   @Field({ nullable: true })
   transactionId?: number;
 
@@ -62,7 +62,7 @@ export class BookingProgressResponseDto {
 @InputType()
 @ObjectType('InputFilterMarkers')
 export class InputFilterMarkersDto {
-  @Field((type) => GraphQLJSON)
+  @Field(type => GraphQLJSON)
   connectorTypesSelected: JSON;
 
   @Field({ nullable: true })
@@ -84,7 +84,7 @@ export class InputFilterSiteDto {
   @Field({ nullable: true })
   siteId: number;
 
-  @Field((type) => GraphQLJSON)
+  @Field(type => GraphQLJSON)
   connectorTypesSelected?: JSON;
 
   // @Field((type) => GraphQLJSON)
@@ -104,11 +104,24 @@ export class InputFilterSiteDto {
 }
 
 @InputType()
-@ObjectType('InputFilterBookingProgress')
-export class InputFilterBookingProgressDto {
+@ObjectType('InputFilterChargingProgress')
+export class InputFilterChargingProgressDto {
   @Field({ nullable: true })
   connectorId: number;
 
   @Field({ nullable: true })
   userId: number;
+}
+
+@InputType()
+@ObjectType('SubscribeConnectorStatusInput')
+export class SubscribeConnectorStatusInputDto {
+  @Field({ nullable: true })
+  connectorId: number;
+}
+
+@ObjectType('SubscribeConnectorStatusResponse')
+export class SubscribeConnectorStatusResponseDto {
+  @Field({ nullable: true })
+  status?: string;
 }

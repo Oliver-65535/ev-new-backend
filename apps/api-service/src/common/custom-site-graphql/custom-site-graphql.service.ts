@@ -3,16 +3,23 @@ import {
   UnauthorizedException,
   NotFoundException,
 } from '@nestjs/common';
-import { DataSource } from 'typeorm';
 
 import { InjectQueryService, QueryService } from '@nestjs-query/core';
 
-import { ChargePointEntity, ConnectorEntity, SiteEntity } from '@app/entities';
+import {
+  ChargePointEntity,
+  ConnectorEntity,
+  OrganizationEntity,
+  SiteEntity,
+} from '@app/entities';
 import { MapsApiResolver } from '../maps-api/maps-api.resolver';
+import { CustomDeleteOrganizationInput } from './dto/custom-site-grapql.dto';
 
 @Injectable()
 export class CustomSiteGraphQLService {
   constructor(
+    @InjectQueryService(OrganizationEntity)
+    private organizationService: QueryService<OrganizationEntity>,
     @InjectQueryService(ChargePointEntity)
     private chargePointService: QueryService<ChargePointEntity>,
     @InjectQueryService(SiteEntity)
@@ -38,8 +45,35 @@ export class CustomSiteGraphQLService {
     );
 
     console.log('FFFFF', connectors);
-    await this.mapsApiResolver.pubMarkerUpdated(site.id)  
-    return await { siteId: site.id };
+    await this.mapsApiResolver.pubMarkerUpdated(site.id);
+    return { siteId: site.id };
+  }
+
+  async customDeleteOrganization(
+    input: CustomDeleteOrganizationInput,
+    userId: number,
+  ): Promise<any> {
+    const organization = await this.organizationService.findById(
+      input.organizationId,
+    );
+
+    if (!organization) throw new NotFoundException('organizationId not exist!');
+
+    if (organization.ownerId == userId) {
+      const sites = await this.siteService.updateMany(
+        { organizationId: null },
+        {
+          organizationId: { eq: input.organizationId },
+          ownerId: { eq: userId },
+        },
+      );
+      // console.log('customDeleteOrganization', { sites });
+      const { deletedCount } = await this.organizationService.deleteMany({
+        id: { eq: input.organizationId },
+      });
+      // console.log('customDeleteOrganization', { deletedCount });
+      return { deletedCount };
+    } else throw new UnauthorizedException('You not owned this organization!');
   }
 
   async createOrUpdateSite(data, userId): Promise<any> {
@@ -53,7 +87,7 @@ export class CustomSiteGraphQLService {
   }
 
   async createOrUpdateChargePoints(data, siteId, userId): Promise<any> {
-    const arrayCreateChargePoints = data.chargepoints.map((e) => {
+    const arrayCreateChargePoints = data.chargepoints.map(e => {
       if (e.id && e.id > 0) {
         return this.chargePointService.updateOne(
           parseInt(e.id),
@@ -79,9 +113,9 @@ export class CustomSiteGraphQLService {
   async createOrUpdateConnectors(data, siteId, userId): Promise<any> {
     const connectors = [];
 
-    data.map((e) => {
+    data.map(e => {
       if (e.connectors)
-        e.connectors.map((j) => {
+        e.connectors.map(j => {
           connectors.push({
             ...j,
             chargePointId: e.chargePointId,
@@ -93,7 +127,7 @@ export class CustomSiteGraphQLService {
 
     console.log('ARG CONNECTORS', connectors);
 
-    const arrayFuncConnectors = connectors.map((e) => {
+    const arrayFuncConnectors = connectors.map(e => {
       if (e.id && e.id > 0) {
         return this.connectorService.updateOne(
           parseInt(e.id),

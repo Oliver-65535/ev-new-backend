@@ -5,4 +5,4 @@ export * from './error.response';
 export * from './response.interceptor';
 export * from './filters';
 export * from './file';
-export * from './enums'
+export * from './enums';

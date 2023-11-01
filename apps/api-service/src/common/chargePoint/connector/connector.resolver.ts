@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Subscription } from '@nestjs/graphql';
 import { CurrentJwtUser } from '../../decorators';
 import { JwtAuthGuard } from '../../../auth/jwt-auth.guard';
 import { AuthenticatedUser } from '../../../auth/auth.interfaces';
@@ -11,10 +11,21 @@ import {
   TransactionByUserInputDTO,
   TransactionByUserResponseDTO,
 } from './dto/booking.dto';
+import {
+  ChargingProgressResponseDto,
+  InputFilterChargingProgressDto,
+  SubscribeConnectorStatusInputDto,
+  SubscribeConnectorStatusResponseDto,
+} from '../../../common/maps-api/dto/getConnectors.dto';
+
+import { pubSub } from '../../../common/maps-api/maps-api.resolver';
+
+export const eventSubsribeConnectorStatus = data =>
+  pubSub.publish('subsribeConnectorStatus', { subsribeConnectorStatus: data });
 
 type Status = {
-  status:string
-}
+  status: string;
+};
 
 @Resolver()
 export class ConnectorResolver {
@@ -69,7 +80,7 @@ export class ConnectorResolver {
     //   jwtUser.id,
     // );
 
-    return {status: 'Accepted'};
+    return { status: 'Accepted' };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -84,6 +95,44 @@ export class ConnectorResolver {
       jwtUser.id,
     );
 
-    return {status:"Accepted"};
+    return { status: 'Accepted' };
+  }
+
+  //SUBSCRIBE CHARGE PROGRESS
+  @Subscription(() => ChargingProgressResponseDto, {
+    name: 'chargingProgressUpdated',
+    // filter: (payload, variables) => {
+    //   console.log('FILTER', { payload, variables });
+    //   return payload.connectorId === variables.input.connectorId;
+    // },
+    // resolve(this: ConnectorResolver, payload, variables) {
+    //   // "this" refers to an instance of "AuthorResolver"
+    //   console.log(payload, variables);
+    //   return payload;
+    // },
+  })
+  private chargingProgressUpdated(
+    @Args('input') input: InputFilterChargingProgressDto,
+  ) {
+    return pubSub.asyncIterator('chargingProgressUpdated');
+  }
+
+  //SUBSCRIBE CONNECTOR STATUS
+  @Subscription(() => SubscribeConnectorStatusResponseDto, {
+    name: 'subsribeConnectorStatus',
+    filter: (payload, variables) => {
+      console.log('FILTER', { payload, variables });
+      return payload.subsribeConnectorStatus.id === variables.input.connectorId;
+    },
+    // resolve(this: ConnectorResolver, payload, variables) {
+    //   // "this" refers to an instance of "AuthorResolver"
+    //   console.log(payload, variables);
+    //   return payload;
+    // },
+  })
+  private subsribeConnectorStatus(
+    @Args('input') input: SubscribeConnectorStatusInputDto,
+  ) {
+    return pubSub.asyncIterator('subsribeConnectorStatus');
   }
 }

@@ -26,6 +26,10 @@ jwt:
 
 sessionExpirationTime: 86400000
 
+sms-service:
+  apiKey: 'bA6TmSUeQOuTYVsjTj8gTerdn'
+  originator: 'ICAPIA'
+
 microservices:
   auth:
     url: 'http://localhost:3001'

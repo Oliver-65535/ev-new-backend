@@ -6,8 +6,6 @@ import {
   SiteResponseDto,
   InputFilterMarkersDto,
   InputFilterSiteDto,
-  InputFilterBookingProgressDto,
-  BookingProgressResponseDto,
 } from './dto/getConnectors.dto';
 
 import { MapsApiService } from './maps-api.service';
@@ -30,7 +28,7 @@ type siteType = {
   total: number;
 };
 
-const pubSub = new PubSub();
+export const pubSub = new PubSub();
 
 type rest = {
   res: string;
@@ -105,25 +103,6 @@ export class MapsApiResolver {
     return pubSub.asyncIterator('markerUpdated');
   }
 
-  //SUBSCRIBE CHARGE PROGRESS
-  @Subscription(() => BookingProgressResponseDto, {
-    name: 'bookingProgressUpdated',
-    // filter: (payload, variables) => {
-    //   // console.log('FILTER', { payload, variables });
-    //   return payload.siteId === variables.input.siteId;
-    // },
-    // resolve(this: MapsApiResolver, payload, variables) {
-    //   // "this" refers to an instance of "AuthorResolver"
-    //   console.log(payload, variables);
-    //   return payload;
-    // },
-  })
-  private bookingProgressUpdated(
-    @Args('input') input: InputFilterBookingProgressDto,
-  ) {
-    return pubSub.asyncIterator('bookingProgressUpdated');
-  }
-
   private async getUpdatedSite(variables) {
     return await this.mapsApiService.getFilteredSite(variables.input);
   }
@@ -131,11 +110,6 @@ export class MapsApiResolver {
   private async getUpdatedMarker(variables) {
     console.log('YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY', variables);
     return await this.mapsApiService.getFilteredMarkers(variables.input);
-  }
-
-  public pubBookingProgressUpdated(data: any) {
-    console.log(data);
-    pubSub.publish('bookingProgressUpdated', { bookingProgressUpdated: data });
   }
 
   public pubMarkerUpdated(siteId: number) {

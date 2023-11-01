@@ -10,13 +10,13 @@ import { ConfigModule } from '@nestjs/config';
 import { ConnectorModule } from './common/chargePoint/connector/connector.module';
 import { CustomSiteGraphQLModule } from './common/custom-site-graphql/custom-site-graphql.module';
 import { GraphQLModule } from '@nestjs/graphql';
-// import { GraphqlChargingHistoryModule } from './billing-channel/charging-history/charging-history-graphql/charging-history-graphql.module';
+import { GraphqlChargePointModule } from './common/chargePoint/chargePoint/chargePoint-graphql.module';
 import { GraphqlConnectorModule } from './common/chargePoint/connector/connector-graphql/connector-graphql.module';
 import { GraphqlOrganizationModule } from './common/organization/organization-graphql/organization-graphql.module';
 import { GraphqlSiteModule } from './common/site/site/site-graphql/site-graphql.module';
 import { GraphqlUserModule } from './common/user/user-graphql/user-graphql.module';
-import { GraphqlChargePointModule } from './common/chargePoint/chargePoint/chargePoint-graphql.module';
 import { MapsApiModule } from './common/maps-api/maps-api.module';
+import { MessageBirdModule } from 'libs/SMS/messagebird/message-bird.module';
 import { Module } from '@nestjs/common';
 import { OCPPModule } from './modules-microservices/ocpp-cs-service/ocpp-cs.module';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -24,6 +24,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './common/user/user.module';
 import { postgresConfiguration } from '@app/configuration';
 
+// import { GraphqlChargingHistoryModule } from './billing-channel/charging-history/charging-history-graphql/charging-history-graphql.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -57,6 +58,7 @@ import { postgresConfiguration } from '@app/configuration';
     ChargePointModule,
     ConnectorModule,
     ScheduleModule.forRoot(),
+    MessageBirdModule,
   ],
   controllers: [AppController],
   providers: [AppService],

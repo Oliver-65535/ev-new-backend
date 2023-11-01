@@ -1,3 +1,5 @@
+export const REDIS_FILE_STATUS_KEY = (ownerId: number) =>
+  `file-status:${ownerId}`;
 
 export const REDIS_REGISTRATION_KEY = (email: string) =>
   `registration:${email}`;
