@@ -97,63 +97,63 @@ export class RedisService {
     }
   }
 
-  public async setFileStatusData(data: ISetFileStatusInput): Promise<void> {
-    return await this.setRedisData(REDIS_FILE_STATUS_KEY(data.ownerId), data);
-  }
+  // public async setFileStatusData(data: ISetFileStatusInput): Promise<void> {
+  //   return await this.setRedisData(REDIS_FILE_STATUS_KEY(data.ownerId), data);
+  // }
 
-  public async getFileStatusData(
-    data: IGetFileStatusInput,
-  ): Promise<ISetFileStatusInput | []> {
-    const res: ISetFileStatusInput = await this.getRedisData(
-      REDIS_FILE_STATUS_KEY(data.ownerId),
-    );
-    return res;
-  }
+  // public async getFileStatusData(
+  //   data: IGetFileStatusInput,
+  // ): Promise<ISetFileStatusInput | []> {
+  //   const res: ISetFileStatusInput = await this.getRedisData(
+  //     REDIS_FILE_STATUS_KEY(data.ownerId),
+  //   );
+  //   return res;
+  // }
 
-  public async setRegistrationData(data: ISetRegistrationInput): Promise<void> {
-    return await this.setRedisData(REDIS_REGISTRATION_KEY(data.email), data);
-  }
+  // public async setRegistrationData(data: ISetRegistrationInput): Promise<void> {
+  //   return await this.setRedisData(REDIS_REGISTRATION_KEY(data.email), data);
+  // }
 
-  public async getRegistrationData(
-    data: IGetRegistrationInput,
-  ): Promise<ISetRegistrationInput | undefined> {
-    const res: ISetRegistrationInput = await this.getRedisData(
-      REDIS_REGISTRATION_KEY(data.email),
-    );
-    return new GetRegistrationDataModel(res);
-  }
+  // public async getRegistrationData(
+  //   data: IGetRegistrationInput,
+  // ): Promise<ISetRegistrationInput | undefined> {
+  //   const res: ISetRegistrationInput = await this.getRedisData(
+  //     REDIS_REGISTRATION_KEY(data.email),
+  //   );
+  //   return new GetRegistrationDataModel(res);
+  // }
 
-  public async delRegistrationData(data: IGetRegistrationInput): Promise<void> {
-    return await this.delRedisData(REDIS_REGISTRATION_KEY(data.email));
-  }
+  // public async delRegistrationData(data: IGetRegistrationInput): Promise<void> {
+  //   return await this.delRedisData(REDIS_REGISTRATION_KEY(data.email));
+  // }
 
-  public async setResetPasswordData(
-    data: ISetResetPasswordInput,
-  ): Promise<void> {
-    return await this.setRedisData(
-      REDIS_PASSWORD_RECOVERY_KEY(data.email),
-      data,
-    );
-  }
+  // public async setResetPasswordData(
+  //   data: ISetResetPasswordInput,
+  // ): Promise<void> {
+  //   return await this.setRedisData(
+  //     REDIS_PASSWORD_RECOVERY_KEY(data.email),
+  //     data,
+  //   );
+  // }
 
-  public async getResetPasswordData(
-    data: IGetResetPasswordInput,
-  ): Promise<ISetResetPasswordInput | undefined> {
-    const res: ISetResetPasswordInput = await this.getRedisData(
-      REDIS_PASSWORD_RECOVERY_KEY(data.email),
-    );
-    return new GetResetPasswordDataModel(res);
-  }
+  // public async getResetPasswordData(
+  //   data: IGetResetPasswordInput,
+  // ): Promise<ISetResetPasswordInput | undefined> {
+  //   const res: ISetResetPasswordInput = await this.getRedisData(
+  //     REDIS_PASSWORD_RECOVERY_KEY(data.email),
+  //   );
+  //   return new GetResetPasswordDataModel(res);
+  // }
 
-  public async delResetPasswordData(
-    data: IGetResetPasswordInput,
-  ): Promise<void> {
-    return await this.delRedisData(REDIS_PASSWORD_RECOVERY_KEY(data.email));
-  }
+  // public async delResetPasswordData(
+  //   data: IGetResetPasswordInput,
+  // ): Promise<void> {
+  //   return await this.delRedisData(REDIS_PASSWORD_RECOVERY_KEY(data.email));
+  // }
 
-  public async setRedisData(key: string, data: any): Promise<void> {
+  public async setRedisData(key: string, data: any): Promise<'OK'> {
     try {
-      await this.redisService.set(
+      return await this.redisService.set(
         key,
         JSON.stringify(data),
         'EX',
@@ -183,9 +183,9 @@ export class RedisService {
     }
   }
 
-  public async delRedisData(key: string): Promise<void> {
+  public async delRedisData(key: string): Promise<number> {
     try {
-      await this.redisService.del(key);
+      return await await this.redisService.del(key);
     } catch (error) {
       throw new InternalServerErrorException(
         `Method delData exited with error ${error}`,

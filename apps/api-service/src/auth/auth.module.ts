@@ -2,6 +2,8 @@ import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { MailerModule } from 'libs/mailer/src';
+import { MessageBirdModule } from 'libs/SMS/messagebird/message-bird.module';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { RedisCustomModule } from 'libs/redis/redis.module';
@@ -14,6 +16,8 @@ import { jwtConstants } from './auth.constants';
     UserModule,
     PassportModule,
     RedisCustomModule,
+    MessageBirdModule,
+    MailerModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: jwtConfig.accessTokenExpire },

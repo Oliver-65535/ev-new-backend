@@ -4,5 +4,6 @@ import { Module } from '@nestjs/common';
 @Module({
   controllers: [MessageBirdController],
   providers: [MessageBirdService],
+  exports: [MessageBirdService],
 })
 export class MessageBirdModule {}

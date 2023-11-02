@@ -26,6 +26,18 @@ jwt:
 
 sessionExpirationTime: 86400000
 
+emailConfirmation:
+  digitsCount: 6
+  emailConfirmationSubject: 'Mail verification ICAPIA'
+
+mailer:
+  pool: false
+  host: 'smtp.gmail.com'
+  port: 465
+  secure: true
+  user: 'dev.icapia@gmail.com'
+  pass: 'xjxinqiohvgzyhiw'
+
 sms-service:
   apiKey: 'bA6TmSUeQOuTYVsjTj8gTerdn'
   originator: 'ICAPIA'

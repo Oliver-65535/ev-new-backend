@@ -8,3 +8,5 @@ export * from './vault.config';
 export * from './redis.config';
 export * from './session-expiration-time.config';
 export * from './sms.config';
+export * from './mailer.config';
+export * from './email-confirmation.config';

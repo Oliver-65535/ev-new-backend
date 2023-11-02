@@ -31,7 +31,7 @@ export class MessageBirdService {
       body: payload.message,
     };
 
-    this.messagebird.messages.create(params, function (err, response) {
+    return this.messagebird.messages.create(params, function (err, response) {
       if (err) {
         console.error('ERROR:', err);
         return;

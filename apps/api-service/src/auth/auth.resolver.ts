@@ -37,7 +37,7 @@ export class AuthResolver {
 
   @Mutation(() => LoginResponseDTO)
   async login(@Args('input') input: LoginInputDTO): Promise<LoginResponseDTO> {
-    return { accessToken: 'Accepted' }; //this.authService.login(user);
+    return this.authService.login(input);
   }
 
   // @Mutation(() => LoginResponseDTO)

@@ -7,3 +7,5 @@ export * from './openpgp.interface';
 export * from './vault-config.interface';
 export * from './redis-config.interface';
 export * from './sms-config.interface';
+export * from './mailer.interface';
+export * from './email-confirmation-config.interface';
